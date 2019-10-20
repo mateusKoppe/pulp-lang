@@ -1,4 +1,6 @@
-class Variable extends Value {
+package values;
+
+public class Variable extends Value {
     private String value;
     private Scope scope;
 

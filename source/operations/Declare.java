@@ -1,6 +1,10 @@
-import java.io.BufferedReader;
+package operations;
 
-class Declare extends Operation{
+import java.io.BufferedReader;
+import values.Value;
+import values.Scope;
+
+public class Declare extends Operation{
     private Value[] args;
     private Scope scope;
 

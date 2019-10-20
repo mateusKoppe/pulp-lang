@@ -1,6 +1,8 @@
+package values;
+
 import java.util.HashMap;
 
-class Scope {
+public class Scope {
     private Scope parent;
     private HashMap<String, String> pool;
 

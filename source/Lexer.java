@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import operations.*;
+import values.*;
 
 class Lexer {
     private BufferedReader reader;

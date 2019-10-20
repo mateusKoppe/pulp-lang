@@ -1,4 +1,6 @@
-class Constant extends Value {
+package values;
+
+public class Constant extends Value {
     private String value;
 
     public Constant (String value) {

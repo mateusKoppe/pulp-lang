@@ -1,6 +1,10 @@
-import java.io.BufferedReader;
+package operations;
 
-class Show extends Operation{
+import java.io.BufferedReader;
+import values.Value;
+import values.Scope;
+
+public class Show extends Operation{
     private Value[] args;
 
     public Show (Value[] args, Scope scope, BufferedReader br) {
