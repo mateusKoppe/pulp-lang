@@ -1,0 +1,33 @@
+declare name to "Koppe"
+
+sum 1 divide 2 3
+ 
+if name equal to "koppe" do
+    if friend diffente "sabino"
+        declare friend to "sabino"
+        show friend
+    done
+    show name
+done
+
+repeate i less than 5 do
+    show i
+done
+
+operation sum 2 2 -> divide 5 -> multipli 5 6 8
+
+    divide 5 then sum 2 then multipli 5 6 8
+
+declare var to divide 5 then sum of 2 then multipli of 5 6 8
+
+set final to name
+
+
+
+sum(2, dvide(5, 6), 5)
+
+multipli(divide(sum(1, 2),5), 5, 6 ,8)
+
+
+
+show "name"
