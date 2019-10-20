@@ -9,7 +9,7 @@ class Main {
     public static void main (String args[]) {
         StringBuilder sb = new StringBuilder();
 
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("../examples/main.pulp"))) {
+        try (BufferedReader br = Files.newBufferedReader(Paths.get(args[0]))) {
             Lexer lexer = new Lexer(br);
             lexer.run();
         } catch (IOException e) {
