@@ -1,13 +1,13 @@
 import java.io.BufferedReader;
 
 class Show extends Operation{
-    private String[] args;
+    private Value[] args;
 
-    public Show (String[] args, BufferedReader br) {
+    public Show (Value[] args, Scope scope, BufferedReader br) {
         this.args = args;
     }
 
     public void execute () {
-        System.out.println(this.args[0]);
+        System.out.println(this.args[0].getValue());
     }
 }

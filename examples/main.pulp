@@ -1,6 +1,6 @@
+declare name to "PULP"
 show "This is PULP!"
-show ""
-show "PULP"
+show name
 show "Underated"
 show "Linear"
 show "Programming"

@@ -6,10 +6,12 @@ import java.util.Arrays;
 
 class Lexer {
     private BufferedReader reader;
+    private Scope scope;
     private List<Operation> commands;
 
-    public Lexer (BufferedReader br) {
+    public Lexer (BufferedReader br, Scope scope) {
         this.reader = br;
+        this.scope = scope;
         this.commands = new ArrayList<Operation>();
     }
 
@@ -19,12 +21,30 @@ class Lexer {
         }
     }
 
-    public Operation generateOperation (String[] args) {
-        String token = args[0];
-        String[] params = Arrays.copyOfRange(args, 1, args.length);
+    public Value[] generateExpressions (String[] args) {
+        ArrayList<Value> expressions = new ArrayList<Value>();
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            int argLastIndex = arg.length() - 1;
+            Boolean isString = arg.charAt(0) == '"' && arg.charAt(argLastIndex) == '"';
+            if (isString) {
+                expressions.add(new Constant(arg.substring(1, argLastIndex)));
+            } else {
+                expressions.add(new Variable(arg, this.scope));
+            }
+        }
+        return expressions.toArray(new Value[expressions.size()]);
+    }
+
+    public Operation generateOperation (String[] words) {
+        String token = words[0];
+        String[] args = Arrays.copyOfRange(words, 1, words.length);
+        Value[] params = this.generateExpressions(args);
         switch (token) {
             case "show":
-                return new Show(params, this.reader);
+                return new Show(params, this.scope, this.reader);
+            case "declare":
+                return new Declare(params, this.scope, this.reader);
         }
         return null;
     }
@@ -72,7 +92,6 @@ class Lexer {
                 temp = temp + " " + word;
             }
             if (isBuildingString && isQuoteEnd) {
-                temp = temp.substring(1, temp.length() - 1);
                 expressions.add(temp);
                 isBuildingString = false;
                 temp = "";
