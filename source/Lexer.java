@@ -19,7 +19,11 @@ class Lexer {
 
     public void execute () {
         for (int i = 0; i < this.commands.size(); i++) {
-            this.commands.get(i).execute();
+            try {
+                this.commands.get(i).execute();
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            }
         }
     }
 
@@ -38,17 +42,21 @@ class Lexer {
         return expressions.toArray(new Value[expressions.size()]);
     }
 
-    public Operation generateOperation (String[] words) {
+    public Operation generateOperation (String[] words) throws Exception {
         String token = words[0];
         String[] args = Arrays.copyOfRange(words, 1, words.length);
         Value[] params = this.generateExpressions(args);
-        switch (token) {
-            case "show":
-                return new Show(params, this.scope, this.reader);
-            case "declare":
-                return new Declare(params, this.scope, this.reader);
+        try {
+            switch (token) {
+                case "show":
+                    return new Show(params, this.scope, this.reader);
+                case "declare":
+                    return new Declare(params, this.scope, this.reader);
+            }
+        } catch (Exception e) {
+            throw e;
         }
-        return null;
+        throw new Exception("Invalid operation \"" + token + "\"");
     }
     
     public void read () {
@@ -67,6 +75,9 @@ class Lexer {
         }
         catch(IOException e) {
             e.printStackTrace();
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
         }
     }
 

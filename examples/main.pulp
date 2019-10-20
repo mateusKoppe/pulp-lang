@@ -1,5 +1,6 @@
-declare name to "PULP"
-show "This is PULP!"
+declare name
+
+show "Awesome"
 show name
 show "Underated"
 show "Linear"

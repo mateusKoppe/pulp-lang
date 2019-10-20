@@ -1,5 +1,5 @@
 package operations;
 
 abstract public class Operation {
-    abstract public void execute();
+    abstract public void execute() throws Exception;
 }

@@ -7,11 +7,14 @@ import values.Scope;
 public class Show extends Operation{
     private Value[] args;
 
-    public Show (Value[] args, Scope scope, BufferedReader br) {
+    public Show (Value[] args, Scope scope, BufferedReader br) throws Exception {
+        if (args.length != 1) {
+            throw new Exception("Operation \"show\" expect 1 parameter, received " + args.length);
+        }
         this.args = args;
     }
 
-    public void execute () {
+    public void execute () throws Exception {
         System.out.println(this.args[0].getValue());
     }
 }

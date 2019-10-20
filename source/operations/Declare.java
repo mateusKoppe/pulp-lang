@@ -13,7 +13,12 @@ public class Declare extends Operation{
         this.scope = scope;
     }
 
-    public void execute () {
-        this.scope.declareVariable(this.args[0].getOriginal(), this.args[2].getValue());
+    public void execute () throws Exception {
+        if (this.args.length == 1) {
+            this.scope.declareVariable(this.args[0].getOriginal(), "");
+        }
+        if (this.args.length == 3) {
+            this.scope.declareVariable(this.args[0].getOriginal(), this.args[2].getValue());
+        }
     }
 }
