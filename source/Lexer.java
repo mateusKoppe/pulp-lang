@@ -55,6 +55,9 @@ class Lexer {
         String line;
         try {
             while ((line = this.reader.readLine()) != null) {
+                if (line.equals("")) {
+                    continue;
+                }
                 String[] args = this.getArgs(line);
                 Operation operation = this.generateOperation(args);
                 if (operation != null) {
