@@ -13,21 +13,27 @@ public class Lexer {
     private Scope scope;
     private List<Operation> commands;
 
-    public Lexer (BufferedReader br, Scope scope) {
+    public Lexer (BufferedReader br, Scope scope) throws Exception{
         this.reader = br;
         this.scope = scope;
         this.commands = new ArrayList<Operation>();
 
-        this.read();
+        try {
+            this.read();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public void execute () {
-        for (int i = 0; i < this.commands.size(); i++) {
-            try {
+        try {
+            for (int i = 0; i < this.commands.size(); i++) {
                 this.commands.get(i).execute();
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
             }
+        } catch (Exception e) {
+            System.out.println("");
+            System.err.println(e.getMessage());
+            System.err.println("Proccess killed...");
         }
     }
 
@@ -68,10 +74,11 @@ public class Lexer {
         throw new Exception("Invalid operation \"" + token + "\"");
     }
     
-    public void read () {
+    public void read () throws Exception {
         String line;
         try {
-            while ((line = this.reader.readLine().trim()) != null && !line.equals("done")) {
+            while ((line = this.reader.readLine()) != null && !line.trim().equals("done")) {
+                line = line.trim();
                 if (line.equals("")) {
                     continue;
                 }
@@ -86,7 +93,7 @@ public class Lexer {
             e.printStackTrace();
         }
         catch(Exception e) {
-            System.err.println(e.getMessage());
+            throw e;
         }
     }
 

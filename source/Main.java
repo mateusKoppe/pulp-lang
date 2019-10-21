@@ -14,6 +14,9 @@ class Main {
             lexer.run();
         } catch (IOException e) {
             System.err.println("Not found file " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Some error here");
+            System.err.println(e.getMessage());
         }
     }
 }

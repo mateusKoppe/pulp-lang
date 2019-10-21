@@ -16,13 +16,13 @@ public class Call extends Operation{
 
     public void execute () throws Exception {
         if (this.args.length != 1) {
-            throw new Exception("Operation \"show\" expect 1 parameter, received " + args.length);
+            throw new Exception("Operation \"call\" expect 1 parameter, received " + args.length);
         }
         
         String functionName = this.args[0].getOriginal();
         Function function = this.scope.getFunction(functionName);
         if (function == null) {
-            throw new Exception("Erro: Invalid function " + functionName);
+            throw new Exception("Runtime error: Invalid function " + functionName);
         }
         this.scope.getFunction(functionName).call();
     }
