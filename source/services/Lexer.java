@@ -1,3 +1,5 @@
+package services;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +8,7 @@ import java.util.Arrays;
 import operations.*;
 import values.*;
 
-class Lexer {
+public class Lexer {
     private BufferedReader reader;
     private Scope scope;
     private List<Operation> commands;
@@ -15,6 +17,8 @@ class Lexer {
         this.reader = br;
         this.scope = scope;
         this.commands = new ArrayList<Operation>();
+
+        this.read();
     }
 
     public void execute () {
@@ -51,7 +55,12 @@ class Lexer {
                 case "show":
                     return new Show(params, this.scope, this.reader);
                 case "declare":
+                    if (params.length > 3 && params[2].getOriginal().equals("function")) {
+                        return new Function(params, this.scope, this.reader);
+                    }
                     return new Declare(params, this.scope, this.reader);
+                case "call":
+                    return new Call(params, this.scope, this.reader);
             }
         } catch (Exception e) {
             throw e;
@@ -62,7 +71,8 @@ class Lexer {
     public void read () {
         String line;
         try {
-            while ((line = this.reader.readLine()) != null) {
+            while ((line = this.reader.readLine()) != null && !line.equals("done")) {
+                line = line.trim();
                 if (line.equals("")) {
                     continue;
                 }
@@ -82,7 +92,6 @@ class Lexer {
     }
 
     public void run () {
-        this.read();
         this.execute();
     }
 
