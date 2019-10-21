@@ -5,8 +5,10 @@ show "Showing name, should be Koppe"
 show name
 show "Calling function greeting"
 
+call greeting
+
 declare greeting to function params name age do
-    show "tes"
+    show "test"
 
     declare test to function do
         declare testMessage to "Look at this Awesome test man"
@@ -21,10 +23,3 @@ declare greeting to function params name age do
 
     call test
 done
-
-call greeting
-
-show "Calling test, it should get an error"
-call test
-
-show "it should not print"

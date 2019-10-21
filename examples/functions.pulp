@@ -1,0 +1,6 @@
+declare hello to function params name age do
+  show name
+  show age
+done
+
+call hello "koppe" "18"

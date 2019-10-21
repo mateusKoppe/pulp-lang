@@ -1,6 +1,7 @@
 package operations;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
 
 import values.Scope;
 import values.Value;
@@ -8,6 +9,7 @@ import services.Lexer;
 
 public class Function extends Operation {
     private Value[] args;
+    private String[] params;
     private Scope scope;
     private BufferedReader reader;
     private Lexer lexer;
@@ -23,10 +25,13 @@ public class Function extends Operation {
                 "The right syntax is: declare <name> to function [params <param1> [<params2>...]] do"
             );
         }
+
         this.scope = new Scope(parentScope);
         this.reader = br;
         this.name = this.args[0].getOriginal();
-        
+
+        this.loadParams();
+
         try {
             this.read();
         } catch (Exception e) {
@@ -34,11 +39,36 @@ public class Function extends Operation {
         }
     }
 
-    public void call () {
+    public void call (Value[] values) {
+        for (int i = 0; i < this.params.length; i++) {
+            if (i < values.length) {
+                this.scope.declareVariable(this.params[i], values[i].getValue());
+            }
+        }
         this.lexer.run();
     }
     
-    public void execute () {
+    public void execute () {}
+
+    private void loadParams () throws Exception {
+        if (!this.args[3].getOriginal().equals("params")) {
+            this.params = new String[0];
+            return;
+        }
+
+        int paramsLenght = this.args.length - 5;
+        if (paramsLenght == 0) {
+            throw new Exception(
+                "Syntax error inside function:" + this.name + "\n" +
+                "  keywork \"params\" used, but no parameter set"
+            );
+        }
+
+        String[] newParams = new String[paramsLenght];
+        for (int i = 4; !this.args[i].getOriginal().equals("do"); i++) {
+            newParams[i - 4] = this.args[i].getOriginal();
+        }
+        this.params = newParams;
     }
     
     public void read () throws Exception {
