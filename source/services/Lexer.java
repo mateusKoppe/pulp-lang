@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import operations.*;
 import values.*;
 
@@ -37,14 +38,21 @@ public class Lexer {
         }
     }
 
-    public Value[] generateExpressions (String[] args) {
+    public Value[] generateExpressions (String[] args) throws Exception {
         ArrayList<Value> expressions = new ArrayList<Value>();
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             int argLastIndex = arg.length() - 1;
             Boolean isString = arg.charAt(0) == '"' && arg.charAt(argLastIndex) == '"';
+            Boolean isStartNumber = Character.isDigit(arg.charAt(0));
             if (isString) {
                 expressions.add(new Constant(arg.substring(1, argLastIndex)));
+            } else if (isStartNumber) {
+                boolean isNumeric = arg.chars().allMatch( Character::isDigit );
+                if (!isNumeric) {
+                    throw new Exception("Error: invalid variable: " + arg);
+                }
+                expressions.add(new Constant(arg));
             } else {
                 expressions.add(new Variable(arg, this.scope));
             }
@@ -55,8 +63,8 @@ public class Lexer {
     public Operation generateOperation (String[] words) throws Exception {
         String token = words[0];
         String[] args = Arrays.copyOfRange(words, 1, words.length);
-        Value[] params = this.generateExpressions(args);
         try {
+            Value[] params = this.generateExpressions(args);
             switch (token) {
                 case "show":
                     return new Show(params, this.scope, this.reader);
