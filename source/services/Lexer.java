@@ -71,8 +71,7 @@ public class Lexer {
     public void read () {
         String line;
         try {
-            while ((line = this.reader.readLine()) != null && !line.equals("done")) {
-                line = line.trim();
+            while ((line = this.reader.readLine().trim()) != null && !line.equals("done")) {
                 if (line.equals("")) {
                     continue;
                 }

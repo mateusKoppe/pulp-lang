@@ -1,8 +1,17 @@
 declare name to "Koppe"
 
+show "PULP"
+show "Showing name, should be Koppe"
+show name
+show "Calling function greeting"
+
+call greeting
+
+show "Calling test, it should get an error"
+call test
+
 declare greeting to function do
     show "Called greeting"
-
 
     declare test to function do
         declare testMessage to "Look at this Awesome test man"
@@ -18,14 +27,3 @@ declare greeting to function do
     call test
     
 done
-
-show "Showing scopedName, should be null"
-show scopedName
-show "Showing name, should be Koppe"
-show name
-show "Calling function greeting"
-
-call greeting
-
-show "Calling test, it should get an error"
-call test
