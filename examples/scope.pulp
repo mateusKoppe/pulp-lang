@@ -1,0 +1,27 @@
+declare title to "Scope teste"
+show title
+
+declare message to "Say what one more Goddamn time"
+
+show message
+
+set message to "Does he looks like a bitch?"
+
+show message
+
+call setMessage "This is new for me"
+
+show message
+
+declare setMessage to function params newMessage do
+  set message to newMessage
+  show title
+  declare anotherTitle to "Still working"
+
+  declare setMessage to function do
+    show title
+    show anotherTitle
+  done
+
+  call setMessage
+done

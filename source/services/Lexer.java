@@ -73,6 +73,8 @@ public class Lexer {
                         return new Function(params, this.scope, this.reader);
                     }
                     return new Declare(params, this.scope, this.reader);
+                case "set":
+                    return new Set(params, this.scope, this.reader);
                 case "call":
                     return new Call(params, this.scope, this.reader);
             }

@@ -1,7 +1,6 @@
 package operations;
 
 import java.io.BufferedReader;
-import java.util.ArrayList;
 
 import values.Scope;
 import values.Value;
@@ -39,13 +38,17 @@ public class Function extends Operation {
         }
     }
 
-    public void call (Value[] values) {
-        for (int i = 0; i < this.params.length; i++) {
-            if (i < values.length) {
-                this.scope.declareVariable(this.params[i], values[i].getValue());
+    public void call (Value[] values) throws Exception {
+        try {
+            for (int i = 0; i < this.params.length; i++) {
+                if (i < values.length) {
+                    this.scope.declareVariable(this.params[i], values[i].getValue());
+                }
             }
+            this.lexer.run();
+        } catch (Exception e) {
+            throw e;
         }
-        this.lexer.run();
     }
     
     public void execute () {}
