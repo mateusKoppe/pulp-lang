@@ -1,6 +1,9 @@
 declare name to "Koppe"
+declare newValue to sum 1 sum 2 sum 2 4
 
 show "PULP"
+show "Show sum, must be 9"
+show newValue
 show "Showing name, should be Koppe"
 show name
 show "Calling function greeting"
