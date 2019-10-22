@@ -38,6 +38,7 @@ public class Lexer {
         }
     }
 
+    /* TODO: improve this method */
     public Value[] generateExpressions (String[] args) throws Exception {
         ArrayList<Value> expressions = new ArrayList<Value>();
         for (int i = 0; i < args.length; i++) {
@@ -53,6 +54,8 @@ public class Lexer {
                     throw new Exception("Error: invalid variable: " + arg);
                 }
                 expressions.add(new Constant(arg));
+            } else if (arg.equals("input")) {
+                expressions.add(new Input());
             } else {
                 expressions.add(new Variable(arg, this.scope));
             }

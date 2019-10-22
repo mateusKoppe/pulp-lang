@@ -5,11 +5,11 @@ declare message to "Say what one more Goddamn time"
 
 show message
 
-set message to "Does he looks like a bitch?"
+set message to input
 
 show message
 
-call setMessage "This is new for me"
+call setMessage "Does he looks like a bitch?"
 
 show message
 
