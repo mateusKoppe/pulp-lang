@@ -11,7 +11,7 @@ public class Declare extends Operation{
     public Declare (Value[] args, Scope scope, BufferedReader br) throws Exception {
         if ((args.length != 1) && !(args.length >= 3 && args[1].getOriginal().equals("to"))) {
             throw new Exception("Operation \"declare\" got and syntax error. \n" +
-                "The right syntax is: declare <name> [to <value>]" + args.length
+                "The right syntax is: declare <name> [to <value>]"
             );
         }
         this.args = args;
