@@ -8,6 +8,7 @@ import java.util.Arrays;
 
 import operations.*;
 import values.*;
+import values.Mathematics.*;
 
 public class Lexer {
     private BufferedReader reader;
@@ -40,6 +41,7 @@ public class Lexer {
 
     public Value[] generateExpressions (String[] args) throws Exception {
         ArrayList<Value> expressions = new ArrayList<Value>();
+
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             int argLastIndex = arg.length() - 1;
@@ -53,15 +55,50 @@ public class Lexer {
                     throw new Exception("Error: invalid variable: " + arg);
                 }
                 expressions.add(new Constant(arg));
-            } else if (arg.equals("sum")) {
-                String[] sumArgs = Arrays.copyOfRange(args, i + 1, args.length);
-                Value[] sumParams = this.generateExpressions(sumArgs);
-                expressions.add(new Sum(sumParams));
+            } else if (isMath(arg)){
+                callMath(arg, args, i, expressions);
             } else {
                 expressions.add(new Variable(arg, this.scope));
             }
         }
         return expressions.toArray(new Value[expressions.size()]);
+    }
+
+    public boolean isMath(String arg){
+        if(arg.equals("sum") || arg.equals("subtraction") || arg.equals("sub") || arg.equals("multiplication") || arg.equals("mult") || arg.equals("division") || arg.equals("div") || arg.equals("mod") || arg.equals("pow") || arg.equals("sqrt"))
+        return true;
+        else
+        return false;
+    }
+    public void callMath(String arg, String[] args, int i, ArrayList<Value> expressions){
+        String[] auxMath = Arrays.copyOfRange(args, i + 1, args.length);
+        try{
+            if(arg.equals("sum")) {
+                Value[] sumParams = this.generateExpressions(auxMath);
+                expressions.add(new Sum(sumParams));
+            } else if (arg.equals("subtraction") || arg.equals("sub")) {
+                Value[] subParams = this.generateExpressions(auxMath);
+                expressions.add(new Subtraction(subParams));
+            } else if (arg.equals("multiplication") || arg.equals("mult")) {
+                Value[] multiplicationParams = this.generateExpressions(auxMath);
+                expressions.add(new Multiplication(multiplicationParams));
+            } else if (arg.equals("division") || arg.equals("div")) {
+                Value[] divisionParams = this.generateExpressions(auxMath);
+                expressions.add(new Division(divisionParams));
+            } else if (arg.equals("mod")) {
+                Value[] ModParams = this.generateExpressions(auxMath);
+                expressions.add(new Mod(ModParams));
+            } else if (arg.equals("pow")) {
+                Value[] PowerParams = this.generateExpressions(auxMath);
+                expressions.add(new Power(PowerParams));
+            } else if (arg.equals("sqrt")) {
+                Value[] RootParams = this.generateExpressions(auxMath);
+                expressions.add(new Root(RootParams));
+            }
+        }catch( Exception e ){
+            System.out.println("Math expression construction failed");
+            callMath(arg, args, i, expressions);
+        }
     }
 
     public Operation generateOperation (String[] words) throws Exception {

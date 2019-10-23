@@ -1,10 +1,11 @@
-package values;
+package values.Mathematics;
 
-import values.Value;
 
-public class Sum extends Value {
+import values.*;
+
+public class Sum extends Mathematic {
     private Value[] args;
-
+    
     public Sum (Value[] args) throws Exception {
         this.args = args;
     }
