@@ -54,6 +54,10 @@ public class Lexer {
                     throw new Exception("Error: invalid variable: " + arg);
                 }
                 expressions.add(new Constant(arg));
+            } else if (arg.equals("sum")) {
+                String[] sumArgs = Arrays.copyOfRange(args, i + 1, args.length);
+                Value[] sumParams = this.generateExpressions(sumArgs);
+                expressions.add(new Sum(sumParams));
             } else if (arg.equals("input")) {
                 expressions.add(new Input());
             } else {
