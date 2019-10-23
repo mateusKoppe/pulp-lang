@@ -13,7 +13,7 @@ public class Sum extends Value {
         return "sum";
     }
 
-    public String getValue () {
+    public String getValue () throws Exception {
         try {
             return Double.toString(Double.parseDouble(this.args[0].getValue()) + Double.parseDouble(this.args[1].getValue()));
         } catch(NumberFormatException e) {
