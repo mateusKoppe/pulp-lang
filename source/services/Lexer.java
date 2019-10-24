@@ -39,6 +39,7 @@ public class Lexer {
         }
     }
 
+    /* TODO: improve this method */
     public Value[] generateExpressions (String[] args) throws Exception {
         ArrayList<Value> expressions = new ArrayList<Value>();
 
@@ -57,6 +58,8 @@ public class Lexer {
                 expressions.add(new Constant(arg));
             } else if (isMath(arg)){
                 callMath(arg, args, i, expressions);
+            } else if (arg.equals("input")) {
+                expressions.add(new Input());
             } else {
                 expressions.add(new Variable(arg, this.scope));
             }
