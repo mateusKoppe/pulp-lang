@@ -2,9 +2,13 @@ package operations;
 
 import java.io.BufferedReader;
 
+import values.Scope;
+import values.Value;
+import services.Lexer;
+
 public class Repeat extends Operation{
 
-    public Repeat(Values[] params,Scope scope,BufferedReader reader){
+    public Repeat(Value[] params, Scope scope, BufferedReader reader){
         System.out.println(params);
     }
 

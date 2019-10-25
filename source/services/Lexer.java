@@ -115,7 +115,7 @@ public class Lexer {
                 case "call":
                     return new Call(params, this.scope, this.reader);
                 case "repeat":
-                    return new Repeat(params, this.scope, this.reader);
+                    //return new Repeat(params, this.scope, this.reader); Calma lá  que já vai 
             }
         } catch (Exception e) {
             throw e;
