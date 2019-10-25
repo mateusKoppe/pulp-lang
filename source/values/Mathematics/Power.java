@@ -14,7 +14,7 @@ public class Power extends Mathematic {
         return "Power";
     }
 
-    public String getValue () {
-        return Double.toString( Math.pow(Double.parseDouble(this.args[0].getValue()), Double.parseDouble(this.args[1].getValue())));
+    public String executeMath() throws Exception {
+        return Double.toString(Math.pow(Double.parseDouble(this.args[0].getValue()), Double.parseDouble(this.args[1].getValue())));
     }
 }

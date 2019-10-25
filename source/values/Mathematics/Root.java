@@ -14,9 +14,7 @@ public class Root extends Mathematic {
         return "Root";
     }
 
-    public String getValue () {
-        //double root = Math.round(Math.pow(Double.parseDouble(this.args[0].getValue()), 1.0 / Double.parseDouble(this.args[1].getValue())));
-        //assertEquals(5, root, 0);
-        return Double.toString(Math.round(Math.pow(Double.parseDouble(this.args[0].getValue()), 1.0 / Double.parseDouble(this.args[1].getValue()))));
+    public String executeMath() throws Exception {
+        return Double.toString(Math.round(Math.pow(Double.parseDouble(this.args[0].getValue()), 1.0/Double.parseDouble(this.args[1].getValue()))));
     }
 }

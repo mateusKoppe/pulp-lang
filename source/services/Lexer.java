@@ -48,6 +48,8 @@ public class Lexer {
             int argLastIndex = arg.length() - 1;
             Boolean isString = arg.charAt(0) == '"' && arg.charAt(argLastIndex) == '"';
             Boolean isStartNumber = Character.isDigit(arg.charAt(0));
+            Boolean isReservedWord = Mathematic.reservatedWords.contains(arg);
+
             if (isString) {
                 expressions.add(new Constant(arg.substring(1, argLastIndex)));
             } else if (isStartNumber) {
@@ -56,8 +58,8 @@ public class Lexer {
                     throw new Exception("Error: invalid variable: " + arg);
                 }
                 expressions.add(new Constant(arg));
-            } else if (isMath(arg)){
-                callMath(arg, args, i, expressions);
+            } else if (isReservedWord){
+                expressions.add(getMathExpression(this.generateExpressions(Arrays.copyOfRange(args, i + 1, args.length)), arg));
             } else if (arg.equals("input")) {
                 expressions.add(new Input());
             } else {
@@ -67,41 +69,32 @@ public class Lexer {
         return expressions.toArray(new Value[expressions.size()]);
     }
 
-    public boolean isMath(String arg){
-        if(arg.equals("sum") || arg.equals("subtraction") || arg.equals("sub") || arg.equals("multiplication") || arg.equals("mult") || arg.equals("division") || arg.equals("div") || arg.equals("mod") || arg.equals("pow") || arg.equals("sqrt"))
-        return true;
-        else
-        return false;
-    }
-    public void callMath(String arg, String[] args, int i, ArrayList<Value> expressions){
-        String[] auxMath = Arrays.copyOfRange(args, i + 1, args.length);
+    public Value getMathExpression(Value[] MathParam, String arg){ //rever o retorno
         try{
-            if(arg.equals("sum")) {
-                Value[] sumParams = this.generateExpressions(auxMath);
-                expressions.add(new Sum(sumParams));
-            } else if (arg.equals("subtraction") || arg.equals("sub")) {
-                Value[] subParams = this.generateExpressions(auxMath);
-                expressions.add(new Subtraction(subParams));
-            } else if (arg.equals("multiplication") || arg.equals("mult")) {
-                Value[] multiplicationParams = this.generateExpressions(auxMath);
-                expressions.add(new Multiplication(multiplicationParams));
-            } else if (arg.equals("division") || arg.equals("div")) {
-                Value[] divisionParams = this.generateExpressions(auxMath);
-                expressions.add(new Division(divisionParams));
-            } else if (arg.equals("mod")) {
-                Value[] ModParams = this.generateExpressions(auxMath);
-                expressions.add(new Mod(ModParams));
-            } else if (arg.equals("pow")) {
-                Value[] PowerParams = this.generateExpressions(auxMath);
-                expressions.add(new Power(PowerParams));
-            } else if (arg.equals("sqrt")) {
-                Value[] RootParams = this.generateExpressions(auxMath);
-                expressions.add(new Root(RootParams));
+            switch (arg) {
+                case "sum":
+                    return new Sum(MathParam);
+                case "subtraction":
+                case "sub":
+                    return new Subtraction(MathParam);
+                case "multiplication":
+                case "mult":
+                    return new Multiplication(MathParam);   
+                case "division":
+                case "div":
+                    return new Division(MathParam);    
+                case "mod":
+                    return new Mod(MathParam);
+                case "pow":
+                    return new Power(MathParam); 
+                case "sqrt":
+                    return new Root(MathParam);
             }
         }catch( Exception e ){
             System.out.println("Math expression construction failed");
-            callMath(arg, args, i, expressions);
+            //getMathExpression(args, i);
         }
+        return null; // O Java tava me pedindo um return aqui (?) fiquei confuso
     }
 
     public Operation generateOperation (String[] words) throws Exception {
@@ -121,6 +114,8 @@ public class Lexer {
                     return new Set(params, this.scope, this.reader);
                 case "call":
                     return new Call(params, this.scope, this.reader);
+                case "repeat":
+                    return new Repeat(params, this.scope, this.reader);
             }
         } catch (Exception e) {
             throw e;

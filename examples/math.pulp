@@ -4,7 +4,7 @@ declare multi to mult 3 sum 1 sub 2 4
 declare divi to div 9 mult 3 sum 2 4
 declare rest to mod 10 mult 3 sum 1 4
 declare power to pow 2 4
-declare root to sqrt 16 2
+declare root to sqrt power 2
 
 
 show "Show subs, must be 7"
