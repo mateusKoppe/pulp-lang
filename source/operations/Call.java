@@ -15,7 +15,7 @@ public class Call extends Operation{
         this.scope = scope;
     }
 
-    public void execute () throws Exception {
+    public OperationResult execute () throws Exception {
         if (this.args.length < 1) {
             throw new Exception("Operation \"call\" expect at least 1 parameter, received " + args.length);
         }
@@ -27,5 +27,6 @@ public class Call extends Operation{
         }
         Value[] params = Arrays.copyOfRange(this.args, 1, this.args.length);
         this.scope.getFunction(functionName).call(params);
+        return null;
     }
 }

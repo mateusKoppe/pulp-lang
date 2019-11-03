@@ -51,7 +51,9 @@ public class Function extends Operation {
         }
     }
     
-    public void execute () {}
+    public OperationResult execute () {
+        return null;
+    }
 
     private void loadParams () throws Exception {
         if (!this.args[3].getOriginal().equals("params")) {

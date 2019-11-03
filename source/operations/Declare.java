@@ -18,7 +18,7 @@ public class Declare extends Operation{
         this.scope = scope;
     }
 
-    public void execute () throws Exception {
+    public OperationResult execute () throws Exception {
         try {
             if (this.args.length == 1) {
                 this.scope.declareVariable(this.args[0].getOriginal(), "");
@@ -26,6 +26,7 @@ public class Declare extends Operation{
             else if (this.args.length >= 3) {
                 this.scope.declareVariable(this.args[0].getOriginal(), this.args[2].getValue());
             }
+            return null;
         } catch (Exception e) {
             throw e;
         }

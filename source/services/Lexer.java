@@ -30,7 +30,10 @@ public class Lexer {
     public void execute () {
         try {
             for (int i = 0; i < this.commands.size(); i++) {
-                this.commands.get(i).execute();
+                OperationResult result = this.commands.get(i).execute();
+                if (result != null && result.type.equals("result")) {
+                    return;
+                }
             }
         } catch (Exception e) {
             System.out.println("");
@@ -62,6 +65,8 @@ public class Lexer {
                 expressions.add(getMathExpression(this.generateExpressions(Arrays.copyOfRange(args, i + 1, args.length)), arg));
             } else if (arg.equals("input")) {
                 expressions.add(new Input());
+            } else if (arg.equals("call")) {
+                expressions.add(new Call());
             } else {
                 expressions.add(new Variable(arg, this.scope));
             }
@@ -114,6 +119,8 @@ public class Lexer {
                     return new Set(params, this.scope, this.reader);
                 case "call":
                     return new Call(params, this.scope, this.reader);
+                case "return":
+                    return new Return(params, this.scope, this.reader);
                 case "repeat":
                     //return new Repeat(params, this.scope, this.reader); Calma lá  que já vai 
             }
