@@ -34,6 +34,15 @@ class LexerExpression {
                 lastIteration = LexerExpression.handleMath(params, expressions, scope);
                 continue;
             }
+
+            if (params[0].equals("input")) {
+                expressions.add(new Input());
+                lastIteration = 1;
+                continue;
+            }
+
+            expressions.add(new Variable(params[0], scope));
+            lastIteration = 1;
         }
         return expressions.toArray(new Value[expressions.size()]);
     }
