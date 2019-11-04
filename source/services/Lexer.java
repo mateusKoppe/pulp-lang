@@ -26,12 +26,12 @@ public class Lexer {
         }
     }
 
-    public void execute () {
+    public OperationResult execute () {
         try {
             for (int i = 0; i < this.commands.size(); i++) {
                 OperationResult result = this.commands.get(i).execute();
-                if (result != null && result.type.equals("result")) {
-                    return;
+                if (result != null && result.type.equals("return")) {
+                    return result;
                 }
             }
         } catch (Exception e) {
@@ -39,6 +39,7 @@ public class Lexer {
             System.err.println(e.getMessage());
             System.err.println("Proccess killed...");
         }
+        return null;
     }
 
     public Operation generateOperation (String[] words) throws Exception {
@@ -92,8 +93,8 @@ public class Lexer {
         }
     }
 
-    public void run () {
-        this.execute();
+    public OperationResult run () {
+        return this.execute();
     }
 
     private String[] getArgs(String line) {

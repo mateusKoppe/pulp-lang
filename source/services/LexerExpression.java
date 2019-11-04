@@ -1,9 +1,12 @@
 package services;
 
-import values.*;
-import values.Mathematics.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import values.*;
+import values.Mathematics.*;
+import operations.Function;
+import operations.OperationResult;
 
 class LexerExpression {
     public static Value[] getExpressions (String[] args, Scope scope) throws Exception {
@@ -32,6 +35,11 @@ class LexerExpression {
 
             if (LexerExpression.isMathExpression(params[0])) {
                 lastIteration = LexerExpression.handleMath(params, expressions, scope);
+                continue;
+            }
+
+            if (params[0].equals("call")) {
+                lastIteration = LexerExpression.handleCall(params, expressions, scope);
                 continue;
             }
 
@@ -119,6 +127,19 @@ class LexerExpression {
             expressions.add(values[i]);
         }
 
+        return args.length;
+    }
+
+    private static int handleCall (String[] args, ArrayList<Value> expressions, Scope scope) throws Exception {
+        String[] params = Arrays.copyOfRange(args, 2, args.length);
+        Value[] values = LexerExpression.getExpressions(params, scope);
+
+        Function function = scope.getFunction(args[1]);
+
+        OperationResult result = function.call(values);
+        Value value = result.value;
+
+        expressions.add(value);
         return args.length;
     }
 }
