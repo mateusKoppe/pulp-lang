@@ -44,6 +44,10 @@ public class Lexer {
 
     public Operation generateOperation (String[] words) throws Exception {
         String token = words[0];
+        Boolean isComment = token.substring(0, 2).equals("//");
+        if (isComment) {
+            return null;
+        }
         String[] args = Arrays.copyOfRange(words, 1, words.length);
         try {
             Value[] params = LexerExpression.getExpressions(args, this.scope);
