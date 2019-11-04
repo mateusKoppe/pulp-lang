@@ -1,11 +1,1 @@
-declare hello to function params name age do
-  show name
-  show age
-done
-
-declare getMessage to function do
-  return "awesome"
-done
-
-call hello "koppe" "18"
-declare name to call getMessage
+show "teste mano"

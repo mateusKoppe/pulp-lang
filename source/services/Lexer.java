@@ -8,7 +8,6 @@ import java.util.Arrays;
 
 import operations.*;
 import values.*;
-import values.Mathematics.*;
 
 public class Lexer {
     private BufferedReader reader;
@@ -42,71 +41,11 @@ public class Lexer {
         }
     }
 
-    /* TODO: improve this method */
-    public Value[] generateExpressions (String[] args) throws Exception {
-        ArrayList<Value> expressions = new ArrayList<Value>();
-
-        for (int i = 0; i < args.length; i++) {
-            String arg = args[i];
-            int argLastIndex = arg.length() - 1;
-            Boolean isString = arg.charAt(0) == '"' && arg.charAt(argLastIndex) == '"';
-            Boolean isStartNumber = Character.isDigit(arg.charAt(0));
-            Boolean isReservedWord = Mathematic.reservatedWords.contains(arg);
-
-            if (isString) {
-                expressions.add(new Constant(arg.substring(1, argLastIndex)));
-            } else if (isStartNumber) {
-                boolean isNumeric = arg.chars().allMatch( Character::isDigit );
-                if (!isNumeric) {
-                    throw new Exception("Error: invalid variable: " + arg);
-                }
-                expressions.add(new Constant(arg));
-            } else if (isReservedWord){
-                expressions.add(getMathExpression(this.generateExpressions(Arrays.copyOfRange(args, i + 1, args.length)), arg));
-            } else if (arg.equals("input")) {
-                expressions.add(new Input());
-            } else if (arg.equals("call")) {
-                expressions.add(new Call());
-            } else {
-                expressions.add(new Variable(arg, this.scope));
-            }
-        }
-        return expressions.toArray(new Value[expressions.size()]);
-    }
-
-    public Value getMathExpression(Value[] MathParam, String arg){ //rever o retorno
-        try{
-            switch (arg) {
-                case "sum":
-                    return new Sum(MathParam);
-                case "subtraction":
-                case "sub":
-                    return new Subtraction(MathParam);
-                case "multiplication":
-                case "mult":
-                    return new Multiplication(MathParam);   
-                case "division":
-                case "div":
-                    return new Division(MathParam);    
-                case "mod":
-                    return new Mod(MathParam);
-                case "pow":
-                    return new Power(MathParam); 
-                case "sqrt":
-                    return new Root(MathParam);
-            }
-        }catch( Exception e ){
-            System.out.println("Math expression construction failed");
-            //getMathExpression(args, i);
-        }
-        return null; // O Java tava me pedindo um return aqui (?) fiquei confuso
-    }
-
     public Operation generateOperation (String[] words) throws Exception {
         String token = words[0];
         String[] args = Arrays.copyOfRange(words, 1, words.length);
         try {
-            Value[] params = this.generateExpressions(args);
+            Value[] params = LexerExpression.getExpressions(args, this.scope);
             switch (token) {
                 case "show":
                     return new Show(params, this.scope, this.reader);
