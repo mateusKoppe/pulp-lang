@@ -1,6 +1,5 @@
 package services;
 
-import operations.*;
 import values.*;
 import values.Mathematics.*;
 import java.util.ArrayList;
@@ -10,28 +9,36 @@ class LexerExpression {
     public static Value[] getExpressions (String[] args, Scope scope) throws Exception {
         ArrayList<Value> expressions = new ArrayList<Value>();
 
-        for (int i = 0; i < args.length; i++) {
-            String[] params = Arrays.copyOfRange(args, i, args.length);
+        String[] params = args.clone();
 
-            if (LexerExpression.isStringExpression(args[i])) {
-                i = LexerExpression.handleString(params, expressions);
+        int lastIteration = 0;
+
+        while (lastIteration <= params.length) {
+            params = Arrays.copyOfRange(params, lastIteration, params.length);
+
+            if (params.length == 0) {
+                break;
+            }
+
+            if (LexerExpression.isStringExpression(params[0])) {
+                lastIteration = LexerExpression.handleString(params, expressions);
                 continue;
             }
 
-            if (LexerExpression.isNumberExpression(args[1])) {
-                i = LexerExpression.handleNumber(params, expressions);
+            if (LexerExpression.isNumberExpression(params[0])) {
+                lastIteration = LexerExpression.handleNumber(params, expressions);
                 continue;
             }
 
-            if (LexerExpression.isMathExpression(args[i])) {
-                i = LexerExpression.handleNumber(params, expressions);
+            if (LexerExpression.isMathExpression(params[0])) {
+                lastIteration = LexerExpression.handleMath(params, expressions, scope);
                 continue;
             }
         }
         return expressions.toArray(new Value[expressions.size()]);
     }
 
-    public static Value getMathExpression(Value[] MathParam, String arg){ //rever o retorno
+    public static Value getMathExpression(String arg, Value[] MathParam){ //rever o retorno
         try{
             switch (arg) {
                 case "sum":
@@ -89,5 +96,20 @@ class LexerExpression {
         }
         expressions.add(new Constant(arg));
         return 1;
+    }
+
+    private static int handleMath (String[] args, ArrayList<Value> expressions, Scope scope) throws Exception {
+        String[] params = Arrays.copyOfRange(args, 1, args.length);
+        Value[] values = LexerExpression.getExpressions(params, scope);
+
+        String operation = args[0];
+        Value expression = LexerExpression.getMathExpression(operation, values);
+        expressions.add(expression);
+
+        for (int i = 2; i < values.length; i++) {
+            expressions.add(values[i]);
+        }
+
+        return args.length;
     }
 }
