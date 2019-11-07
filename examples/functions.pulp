@@ -1,6 +1,8 @@
-declare hello to function params name age do
-  show name
-  show age
+declare getAgeByYear to function params year do
+    // Subtract by actual year to get age
+    declare result to sub 2019 year
+    return result
 done
 
-call hello "koppe" "18"
+// Do some calcs to get 1999 value
+show call getAgeByYear sum 1000 sub 1000 1

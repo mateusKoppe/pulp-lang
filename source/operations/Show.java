@@ -14,7 +14,8 @@ public class Show extends Operation{
         this.args = args;
     }
 
-    public void execute () throws Exception {
+    public OperationResult execute () throws Exception {
         System.out.println(this.args[0].getValue());
+        return null;
     }
 }

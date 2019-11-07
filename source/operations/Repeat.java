@@ -13,11 +13,7 @@ public class Repeat extends Operation{
     }
 
 
-    public void execute() throws Exception{
-        try{
-
-        }catch(Exception e){
-
-        }
+    public OperationResult execute() throws Exception{
+        return null;
     }
 }
