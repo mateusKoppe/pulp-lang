@@ -6,7 +6,6 @@ import values.Scope;
 
 public class Return extends Operation {
     private Value[] args;
-    private Scope scope;
 
     public Return (Value[] args, Scope scope, BufferedReader br) throws Exception {
         if (args.length != 1) {
@@ -15,7 +14,6 @@ public class Return extends Operation {
             );
         }
         this.args = args;
-        this.scope = scope;
     }
 
     public OperationResult execute () throws Exception {
