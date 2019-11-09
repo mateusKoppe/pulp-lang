@@ -7,7 +7,7 @@ import values.Scope;
 public class Return extends Operation {
     private Value[] args;
 
-    public Return (Value[] args, Scope scope, BufferedReader br) throws Exception {
+    public Return (Value[] args, BufferedReader br) throws Exception {
         if (args.length != 1) {
             throw new Exception("Operation \"return\" got and syntax error. \n" +
                 "The right syntax is: return <value>"
@@ -16,7 +16,7 @@ public class Return extends Operation {
         this.args = args;
     }
 
-    public OperationResult execute () throws Exception {
+    public OperationResult execute (Scope scope) throws Exception {
         try {
             OperationResult result = new OperationResult("return");
             result.value = this.args[0];

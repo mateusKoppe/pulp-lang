@@ -136,7 +136,7 @@ class LexerExpression {
 
         Function function = scope.getFunction(args[1]);
 
-        OperationResult result = function.call(values);
+        OperationResult result = function.call(values, scope);
         Value value = result.value;
 
         expressions.add(value);

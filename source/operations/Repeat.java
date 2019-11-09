@@ -12,7 +12,7 @@ public class Repeat extends Operation{
     }
 
 
-    public OperationResult execute() throws Exception{
+    public OperationResult execute(Scope scope) throws Exception{
         return null;
     }
 }
