@@ -14,7 +14,10 @@ public class Subtraction extends Mathematic {
         return "Subtraction";
     }
 
-    public String executeMath() throws Exception {
-        return Double.toString(Double.parseDouble(this.args[0].getValue()) - Double.parseDouble(this.args[1].getValue()));
+    public String executeMath(Scope scope) throws Exception {
+        Double param1 = Double.parseDouble(this.args[0].getValue(scope));
+        Double param2 = Double.parseDouble(this.args[1].getValue(scope));
+        Double result = param1 - param2;
+        return Double.toString(result);
     }
 }

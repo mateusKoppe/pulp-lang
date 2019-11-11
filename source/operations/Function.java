@@ -1,20 +1,26 @@
 package operations;
 
 import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import values.Scope;
 import values.Value;
 import services.Lexer;
 
 public class Function extends Operation {
+    private static HashMap<String, Function> pool = new HashMap<String, Function>();
+    
     private Value[] args;
     private String[] params;
+    private List<String> paramsName;
     private Scope scope;
     private BufferedReader reader;
     private Lexer lexer;
     private String name;
 
-    public Function (Value[] args, Scope parentScope, BufferedReader br) throws Exception {
+    public Function (Value[] args, BufferedReader br) throws Exception {
         this.args = args;
         if (!this.args[1].getOriginal().equals("to") ||
             !this.args[2].getOriginal().equals("function") ||
@@ -25,9 +31,9 @@ public class Function extends Operation {
             );
         }
 
-        this.scope = new Scope(parentScope);
         this.reader = br;
         this.name = this.args[0].getOriginal();
+        this.paramsName = new ArrayList<String>();
 
         this.loadParams();
 
@@ -38,20 +44,28 @@ public class Function extends Operation {
         }
     }
 
-    public OperationResult call (Value[] values) throws Exception {
+    public OperationResult call (Value[] values, Scope scope) throws Exception {
         try {
+            this.scope = new Scope(scope);
             for (int i = 0; i < this.params.length; i++) {
                 if (i < values.length) {
-                    this.scope.declareVariable(this.params[i], values[i].getValue());
+                    this.scope.declareVariable(this.paramsName.get(i), values[i].getValue(scope));
+                } else {
+                    this.scope.declareVariable(this.paramsName.get(i), "");
                 }
             }
-            return this.lexer.run();
+            return this.lexer.run(this.scope);
         } catch (Exception e) {
             throw e;
         }
     }
     
-    public OperationResult execute () {
+    public OperationResult execute (Scope scope) throws Exception {
+        try {
+           
+        } catch (Exception e) {
+            throw e;
+        }
         return null;
     }
 
@@ -61,15 +75,15 @@ public class Function extends Operation {
             return;
         }
 
-        int paramsLenght = this.args.length - 5;
-        if (paramsLenght == 0) {
+        int paramsLength = this.args.length - 5;
+        if (paramsLength == 0) {
             throw new Exception(
                 "Syntax error inside function:" + this.name + "\n" +
-                "  keywork \"params\" used, but no parameter set"
+                "  keyword \"params\" used, but no parameter set"
             );
         }
 
-        String[] newParams = new String[paramsLenght];
+        String[] newParams = new String[paramsLength];
         for (int i = 4; !this.args[i].getOriginal().equals("do"); i++) {
             newParams[i - 4] = this.args[i].getOriginal();
         }
@@ -78,10 +92,21 @@ public class Function extends Operation {
     
     public void read () throws Exception {
         try {
-            this.lexer = new Lexer(this.reader, this.scope);
-            this.scope.getParent().declareFunction(this.name, this);
+            this.lexer = new Lexer(this.reader);
+            for (int i = 0; i < this.params.length; i++) {
+                this.paramsName.add(this.params[i]);
+            }
+            Function.declareFunction(this.name, this);
         } catch (Exception e) {
             throw new Exception("Syntax error inside function: " + this.name + "\n" + e.getMessage());
         }
     };
+
+    private static void declareFunction (String name, Function function)  {
+        Function.pool.put(name, function);
+    }
+
+    public static Function getFunction (String name) {
+        return Function.pool.get(name);
+    }
 }

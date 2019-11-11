@@ -15,7 +15,7 @@ public class Input extends Value {
         return this.value;
     }
 
-    public String getValue () {
+    public String getValue (Scope scope) {
         return this.scanner.nextLine();
     }
 

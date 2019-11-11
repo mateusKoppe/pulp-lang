@@ -14,9 +14,8 @@ public class Lexer {
     private Scope scope;
     private List<Operation> commands;
 
-    public Lexer (BufferedReader br, Scope scope) throws Exception{
+    public Lexer (BufferedReader br) throws Exception{
         this.reader = br;
-        this.scope = scope;
         this.commands = new ArrayList<Operation>();
 
         try {
@@ -29,7 +28,7 @@ public class Lexer {
     public OperationResult execute () {
         try {
             for (int i = 0; i < this.commands.size(); i++) {
-                OperationResult result = this.commands.get(i).execute();
+                OperationResult result = this.commands.get(i).execute(this.scope);
                 if (result != null && result.type.equals("return")) {
                     return result;
                 }
@@ -50,21 +49,21 @@ public class Lexer {
         }
         String[] args = Arrays.copyOfRange(words, 1, words.length);
         try {
-            Value[] params = LexerExpression.getExpressions(args, this.scope);
+            Value[] params = LexerExpression.getExpressions(args);
             switch (token) {
                 case "show":
-                    return new Show(params, this.scope, this.reader);
+                    return new Show(params, this.reader);
                 case "declare":
                     if (params.length > 3 && params[2].getOriginal().equals("function")) {
-                        return new Function(params, this.scope, this.reader);
+                        return new Function(params, this.reader);
                     }
-                    return new Declare(params, this.scope, this.reader);
+                    return new Declare(params, this.reader);
                 case "set":
-                    return new Set(params, this.scope, this.reader);
+                    return new Set(params, this.reader);
                 case "call":
-                    return new Call(params, this.scope, this.reader);
+                    return new Call(params, this.reader);
                 case "return":
-                    return new Return(params, this.scope, this.reader);
+                    return new Return(params, this.reader);
                 case "repeat":
                     //return new Repeat(params, this.scope, this.reader); Calma lá  que já vai 
             }
@@ -97,7 +96,8 @@ public class Lexer {
         }
     }
 
-    public OperationResult run () {
+    public OperationResult run (Scope scope) {
+        this.scope = scope;
         return this.execute();
     }
 

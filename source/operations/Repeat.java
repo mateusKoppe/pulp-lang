@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 
 import values.Scope;
 import values.Value;
-import services.Lexer;
 
 public class Repeat extends Operation{
 
@@ -13,7 +12,7 @@ public class Repeat extends Operation{
     }
 
 
-    public OperationResult execute() throws Exception{
+    public OperationResult execute(Scope scope) throws Exception{
         return null;
     }
 }

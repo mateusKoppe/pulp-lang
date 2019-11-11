@@ -8,10 +8,11 @@ show "Showing name, should be Koppe"
 show name
 show "Calling function greeting"
 
-call greeting "Not Koppe"
-
 declare greeting to function params name do
     show "test"
+
+    declare test to 1
+    declare testSum to sum 1 2
 
     declare test to function do
         declare testMessage to "Look at this Awesome test man"
@@ -26,3 +27,5 @@ declare greeting to function params name do
 
     call test
 done
+
+call greeting "Not Koppe" end

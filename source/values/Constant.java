@@ -11,7 +11,7 @@ public class Constant extends Value {
         return this.value;
     }
 
-    public String getValue () {
+    public String getValue (Scope scope) {
         return this.value;
     }
 }

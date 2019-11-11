@@ -11,8 +11,7 @@ public class FunctionReturn extends Value {
         return null;
     }
 
-    public String getValue() throws Exception {
-        System.out.printf(this.args[0].getValue());
-        return null;
+    public String getValue(Scope scope) throws Exception {
+        return this.args[0].getValue(scope);
     }
 }
