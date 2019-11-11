@@ -5,8 +5,6 @@ import java.util.Arrays;
 
 import values.*;
 import values.Mathematics.*;
-import operations.Function;
-import operations.OperationResult;
 
 public class LexerExpression {
     public static Value[] getExpressions (String[] args) throws Exception {

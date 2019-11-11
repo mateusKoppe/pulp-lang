@@ -1,7 +1,13 @@
-show "Enter any truthy value to see some message"
 
+show "Enter any truthy value to to sum"
 declare condition to input
+declare total to 0
 
-if condition do
-    show "nice"
+repeat if condition do
+    set total to sum total condition
+    show total
+    show "Enter any truthy value to to sum"
+    set condition to input
 done
+
+show "done"
