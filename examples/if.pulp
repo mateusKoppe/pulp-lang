@@ -1,0 +1,7 @@
+show "Enter any truthy value to see some message"
+
+declare condition to input
+
+if condition do
+    show "nice"
+done
