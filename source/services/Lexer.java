@@ -66,6 +66,8 @@ public class Lexer {
                     return new Return(params, this.reader);
                 case "if":
                     return new If(params, this.reader);
+                case "repeat":
+                    return new Repeat(params, this.reader);
             }
         } catch (Exception e) {
             throw e;
