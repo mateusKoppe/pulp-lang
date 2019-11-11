@@ -14,9 +14,8 @@ public class Lexer {
     private Scope scope;
     private List<Operation> commands;
 
-    public Lexer (BufferedReader br, Scope scope) throws Exception{
+    public Lexer (BufferedReader br) throws Exception{
         this.reader = br;
-        this.scope = scope;
         this.commands = new ArrayList<Operation>();
 
         try {
@@ -50,13 +49,13 @@ public class Lexer {
         }
         String[] args = Arrays.copyOfRange(words, 1, words.length);
         try {
-            Value[] params = LexerExpression.getExpressions(args, this.scope);
+            Value[] params = LexerExpression.getExpressions(args);
             switch (token) {
                 case "show":
                     return new Show(params, this.reader);
                 case "declare":
                     if (params.length > 3 && params[2].getOriginal().equals("function")) {
-                        return new Function(params, this.scope, this.reader);
+                        return new Function(params, this.reader);
                     }
                     return new Declare(params, this.reader);
                 case "set":
@@ -95,10 +94,6 @@ public class Lexer {
         catch(Exception e) {
             throw e;
         }
-    }
-
-    public OperationResult run () {
-        return this.execute();
     }
 
     public OperationResult run (Scope scope) {

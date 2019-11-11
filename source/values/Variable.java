@@ -3,7 +3,7 @@ package values;
 public class Variable extends Value {
     private String value;
 
-    public Variable (String value, Scope scope) {
+    public Variable (String value) {
         this.value = value;
     }
 

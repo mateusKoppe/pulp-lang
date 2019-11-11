@@ -5,4 +5,5 @@ declare getAgeByYear to function params year do
 done
 
 // Do some calcs to get 1999 value
-show call getAgeByYear sum 1000 sub 1000 1
+show call getAgeByYear sum 1000 sub 1000 1 end
+show call getAgeByYear 1998 end

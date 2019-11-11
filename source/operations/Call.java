@@ -19,12 +19,12 @@ public class Call extends Operation{
         }
         
         String functionName = this.args[0].getOriginal();
-        Function function = scope.getFunction(functionName);
+        Function function = Function.getFunction(functionName);
         if (function == null) {
             throw new Exception("Runtime error: Invalid function " + functionName);
         }
         Value[] params = Arrays.copyOfRange(this.args, 1, this.args.length);
-        scope.getFunction(functionName).call(params, scope);
+        function.call(params, scope);
         return null;
     }
 }

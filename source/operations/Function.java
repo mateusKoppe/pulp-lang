@@ -2,6 +2,7 @@ package operations;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import values.Scope;
@@ -9,16 +10,17 @@ import values.Value;
 import services.Lexer;
 
 public class Function extends Operation {
+    private static HashMap<String, Function> pool = new HashMap<String, Function>();
+    
     private Value[] args;
     private String[] params;
-    private Scope staticScope;
     private List<String> paramsName;
     private Scope scope;
     private BufferedReader reader;
     private Lexer lexer;
     private String name;
 
-    public Function (Value[] args, Scope parentScope, BufferedReader br) throws Exception {
+    public Function (Value[] args, BufferedReader br) throws Exception {
         this.args = args;
         if (!this.args[1].getOriginal().equals("to") ||
             !this.args[2].getOriginal().equals("function") ||
@@ -29,7 +31,6 @@ public class Function extends Operation {
             );
         }
 
-        this.staticScope = new Scope(parentScope);
         this.reader = br;
         this.name = this.args[0].getOriginal();
         this.paramsName = new ArrayList<String>();
@@ -61,7 +62,7 @@ public class Function extends Operation {
     
     public OperationResult execute (Scope scope) throws Exception {
         try {
-            scope.declareFunction(this.name, this);
+           
         } catch (Exception e) {
             throw e;
         }
@@ -91,12 +92,21 @@ public class Function extends Operation {
     
     public void read () throws Exception {
         try {
-            this.lexer = new Lexer(this.reader, this.staticScope);
+            this.lexer = new Lexer(this.reader);
             for (int i = 0; i < this.params.length; i++) {
                 this.paramsName.add(this.params[i]);
             }
+            Function.declareFunction(this.name, this);
         } catch (Exception e) {
             throw new Exception("Syntax error inside function: " + this.name + "\n" + e.getMessage());
         }
     };
+
+    private static void declareFunction (String name, Function function)  {
+        Function.pool.put(name, function);
+    }
+
+    public static Function getFunction (String name) {
+        return Function.pool.get(name);
+    }
 }

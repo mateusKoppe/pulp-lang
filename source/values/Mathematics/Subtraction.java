@@ -15,6 +15,9 @@ public class Subtraction extends Mathematic {
     }
 
     public String executeMath(Scope scope) throws Exception {
-        return Double.toString(Double.parseDouble(this.args[0].getValue(scope)) - Double.parseDouble(this.args[1].getValue(scope)));
+        Double param1 = Double.parseDouble(this.args[0].getValue(scope));
+        Double param2 = Double.parseDouble(this.args[1].getValue(scope));
+        Double result = param1 - param2;
+        return Double.toString(result);
     }
 }

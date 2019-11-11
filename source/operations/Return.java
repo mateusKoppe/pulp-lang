@@ -2,6 +2,7 @@ package operations;
 
 import java.io.BufferedReader;
 import values.Value;
+import values.Constant;
 import values.Scope;
 
 public class Return extends Operation {
@@ -19,7 +20,7 @@ public class Return extends Operation {
     public OperationResult execute (Scope scope) throws Exception {
         try {
             OperationResult result = new OperationResult("return");
-            result.value = this.args[0];
+            result.value = new Constant(this.args[0].getValue(scope));
             return result;
         } catch (Exception e) {
             throw e;

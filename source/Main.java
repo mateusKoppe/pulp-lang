@@ -10,8 +10,8 @@ class Main {
     public static void main (String args[]) {
         try (BufferedReader br = Files.newBufferedReader(Paths.get(args[0]))) {
             Scope scope = new Scope();
-            Lexer lexer = new Lexer(br, scope);
-            lexer.run();
+            Lexer lexer = new Lexer(br);
+            lexer.run(scope);
         } catch (IOException e) {
             System.err.println("Not found file " + e.getMessage());
         } catch (Exception e) {

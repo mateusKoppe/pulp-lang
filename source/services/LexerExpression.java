@@ -8,8 +8,8 @@ import values.Mathematics.*;
 import operations.Function;
 import operations.OperationResult;
 
-class LexerExpression {
-    public static Value[] getExpressions (String[] args, Scope scope) throws Exception {
+public class LexerExpression {
+    public static Value[] getExpressions (String[] args) throws Exception {
         ArrayList<Value> expressions = new ArrayList<Value>();
 
         String[] params = args.clone();
@@ -34,12 +34,12 @@ class LexerExpression {
             }
 
             if (LexerExpression.isMathExpression(params[0])) {
-                lastIteration = LexerExpression.handleMath(params, expressions, scope);
+                lastIteration = LexerExpression.handleMath(params, expressions);
                 continue;
             }
 
             if (params[0].equals("call")) {
-                lastIteration = LexerExpression.handleCall(params, expressions, scope);
+                lastIteration = LexerExpression.handleCall(params, expressions);
                 continue;
             }
 
@@ -49,7 +49,7 @@ class LexerExpression {
                 continue;
             }
 
-            expressions.add(new Variable(params[0], scope));
+            expressions.add(new Variable(params[0]));
             lastIteration = 1;
         }
         return expressions.toArray(new Value[expressions.size()]);
@@ -115,9 +115,9 @@ class LexerExpression {
         return 1;
     }
 
-    private static int handleMath (String[] args, ArrayList<Value> expressions, Scope scope) throws Exception {
+    private static int handleMath (String[] args, ArrayList<Value> expressions) throws Exception {
         String[] params = Arrays.copyOfRange(args, 1, args.length);
-        Value[] values = LexerExpression.getExpressions(params, scope);
+        Value[] values = LexerExpression.getExpressions(params);
 
         String operation = args[0];
         Value expression = LexerExpression.getMathExpression(operation, values);
@@ -130,14 +130,8 @@ class LexerExpression {
         return args.length;
     }
 
-    private static int handleCall (String[] args, ArrayList<Value> expressions, Scope scope) throws Exception {
-        String[] params = Arrays.copyOfRange(args, 2, args.length);
-        Value[] values = LexerExpression.getExpressions(params, scope);
-
-        Function function = scope.getFunction(args[1]);
-
-        OperationResult result = function.call(values, scope);
-        Value value = result.value;
+    private static int handleCall (String[] args, ArrayList<Value> expressions) throws Exception {
+        Value value = new CallExpression(args); 
 
         expressions.add(value);
         return args.length;
