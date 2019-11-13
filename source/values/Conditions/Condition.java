@@ -1,4 +1,4 @@
-package values.Mathematics;
+package values.Conditions;
 
 import java.util.Arrays;
 import java.util.List;
@@ -6,18 +6,18 @@ import java.util.List;
 import values.Scope;
 import values.Value;
 
-abstract public class Mathematic extends Value {
-    public static List<String> reservedWords = Arrays.asList("sum","subtraction","sub","multiplication","mult","division","div","mod","pow","sqrt");
+abstract public class Condition extends Value {
+    public static List<String> reservedWords = Arrays.asList("and", "or", "equals", "different", "diff", "greater", "greaterequals", "less", "lessequals", "not");
     
-    abstract public String getOriginal();
-    abstract public String executeMath(Scope scope) throws Exception;
+    abstract public String executeCondition(Scope scope) throws Exception;
+
     private String errorMath(){
         return "Invalid value in "+ getOriginal() +" operation, \nThis class cannot accept String or Negative numbers as parameters";
     }
     
     public String getValue(Scope scope) throws Exception {
         try{
-            return executeMath(scope);
+            return executeCondition(scope);
         }catch(Exception e){
             throw new Exception(errorMath());
         }

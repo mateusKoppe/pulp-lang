@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import values.*;
 import values.Mathematics.*;
+import values.Conditions.*;
 
 public class LexerExpression {
     public static Value[] getExpressions (String[] args) throws Exception {
@@ -33,6 +34,11 @@ public class LexerExpression {
 
             if (LexerExpression.isMathExpression(params[0])) {
                 lastIteration = LexerExpression.handleMath(params, expressions);
+                continue;
+            }
+
+            if (LexerExpression.isConditionExpression(params[0])) {
+                lastIteration = LexerExpression.handleCondition(params, expressions);
                 continue;
             }
 
@@ -81,6 +87,36 @@ public class LexerExpression {
         return null; // O Java tava me pedindo um return aqui (?) fiquei confuso
     }
 
+    public static Value getConditionExpression(String arg, Value[] params){
+        try{
+            switch (arg) {
+                case "equals":
+                    return new Equals(params);
+                case "diff":
+                case "different":
+                    return new Different(params);
+                case "greater":
+                    return new Greater(params);
+                case "greaterequals":
+                    return new GreaterEquals(params);
+                case "less":
+                    return new Less(params);
+                case "lessequals":
+                    return new LessEquals(params);
+                case "and":
+                    return new And(params);
+                case "or":
+                    return new Or(params);
+                case "not":
+                    return new Not(params);
+            }
+        }catch( Exception e ){
+            System.out.println("Condition expression construction failed");
+            //getMathExpression(args, i);
+        }
+        return null; // O Java tava me pedindo um return aqui (?) fiquei confuso
+    }
+
     private static Boolean isStringExpression (String arg) {
         Boolean isStartInQuote = arg.charAt(0) == '"';
         return isStartInQuote;
@@ -92,7 +128,12 @@ public class LexerExpression {
     }
 
     private static Boolean isMathExpression (String arg) {
-        Boolean isReserved = Mathematic.reservatedWords.contains(arg);
+        Boolean isReserved = Mathematic.reservedWords.contains(arg);
+        return isReserved;
+    }
+
+    private static Boolean isConditionExpression (String arg) {
+        Boolean isReserved = Condition.reservedWords.contains(arg);
         return isReserved;
     }
 
@@ -122,6 +163,26 @@ public class LexerExpression {
         expressions.add(expression);
 
         for (int i = 2; i < values.length; i++) {
+            expressions.add(values[i]);
+        }
+
+        return args.length;
+    }
+
+    private static int handleCondition (String[] args, ArrayList<Value> expressions) throws Exception {
+        String[] params = Arrays.copyOfRange(args, 1, args.length);
+        Value[] values = LexerExpression.getExpressions(params);
+
+        String operation = args[0];
+        Value expression = LexerExpression.getConditionExpression(operation, values);
+        expressions.add(expression);
+
+        int startI = 2;
+        if (operation.equals("not")) {
+            startI = 1;
+        }        
+
+        for (int i = startI; i < values.length; i++) {
             expressions.add(values[i]);
         }
 

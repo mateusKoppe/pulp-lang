@@ -1,15 +1,10 @@
 package operations;
 
 import java.io.BufferedReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 import values.Scope;
 import values.Value;
 import services.Lexer;
-import services.LexerExpression;
 
 public class If extends Operation {
     private Value[] args;
@@ -26,15 +21,8 @@ public class If extends Operation {
         }
 
         this.condition = args[0];
-
         this.reader = br;
-        
-
-        try {
-            this.read();
-        } catch (Exception e) {
-            throw e;
-        }
+        this.read();
     }
 
     public OperationResult execute (Scope parent) throws Exception {
