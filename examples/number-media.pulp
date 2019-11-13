@@ -1,0 +1,8 @@
+show "Numbers media"
+show "Enter first number"
+declare number1 to input
+show "Enter second number"
+declare number2 to input
+
+show "The media is"
+show div sum number1 number2 2 

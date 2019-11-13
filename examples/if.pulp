@@ -1,12 +1,9 @@
+declare a to 1
 
-show "Lets check if you can drive"
-show "enter your age"
-declare age to input
-
-if not less age 18 do
-    show "You can drive :)"
+if greater a 1 do
+    show "Bigger"
 done
 
-if less age 18 do
-    show "You cannot drive :("
+if not greater a 1 do
+    show "Smaller"
 done
