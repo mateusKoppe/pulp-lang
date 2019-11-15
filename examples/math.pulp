@@ -1,23 +1,8 @@
 declare subs to subtraction 4 sub 2 5
-declare soma to sub 3 sum 1 sum 2 4
-declare multi to mult 3 sum 1 sub 2 4
-declare divi to div 9 mult 3 sum 2 4
-declare rest to mod 10 mult 3 sum 1 4
-declare power to pow 2 4
-declare root to sqrt power 2
 
-
-show "Show subs, must be 7"
-show subs
-show "Show soma, must be -4"
-show soma
-show "Show multi, must be -3"
-show multi
-show "Show divi, must be 0,5"
-show divi
-show "Show rest, must be 10"
-show rest
-show "Show power, must be 16"
-show power
-show "Show Root, must be 4"
-show root
+show div 9 3
+show mod 9 2
+show mult 10 5
+show pow 2 5
+show root 81 2
+show subtraction 20 2

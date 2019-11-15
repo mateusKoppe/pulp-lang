@@ -77,7 +77,7 @@ public class LexerExpression {
                     return new Mod(MathParam);
                 case "pow":
                     return new Power(MathParam); 
-                case "sqrt":
+                case "root":
                     return new Root(MathParam);
             }
         }catch( Exception e ){
