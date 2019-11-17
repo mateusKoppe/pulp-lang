@@ -1,0 +1,21 @@
+declare i to 0
+declare j to i
+
+repeat if less i 3 do
+    if equals i 0 do
+        show "zero"
+    done
+    if diff i 0 do
+        show "Another"
+    done
+    set i to sum i 1
+done
+
+if equals i 3 do
+    if equals j 0 do
+        show "Ok!"
+    done
+    if diff j 0 do
+        show "Error"
+    done
+done

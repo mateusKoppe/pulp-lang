@@ -19,6 +19,15 @@ public class Equals extends Condition {
         if (param1.equals(param2)) {
             return "1";
         }
+        try {
+            Double expression1 = Double.parseDouble(param1);
+            Double expression2 = Double.parseDouble(param2);
+            param1 = expression1.toString();
+            param2 = expression2.toString();
+            if (param1.equals(param2)) {
+                return "1";
+            }
+        } catch (Exception e) {}
         return "0";
     }
 }

@@ -1,0 +1,20 @@
+show "Enter a number to see if it is prime"
+declare number to input
+
+declare isStilValid to 1
+declare i to 2
+
+repeat if less i number do
+    if equals mod number i 0 do
+        set isStilValid to 0
+    done 
+    set i to sum i 1
+done
+
+if isStilValid do
+    show "It is a prime number"
+done
+
+if not isStilValid do
+    show "It is not a prime number"
+done

@@ -1,0 +1,8 @@
+declare a
+declare b
+
+set a to sum 1 1
+set b to sum 3 a
+
+show a 
+show b

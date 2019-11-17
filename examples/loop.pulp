@@ -1,0 +1,6 @@
+declare i to 0
+
+repeat if less i 10 do
+    show i
+    set i to sum i 1
+done
