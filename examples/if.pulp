@@ -1,13 +1,12 @@
 
-show "Enter any truthy value to to sum"
-declare condition to input
-declare total to 0
+show "Lets check if you can drive"
+show "enter your age"
+declare age to input
 
-repeat if condition do
-    set total to sum total condition
-    show total
-    show "Enter any truthy value to to sum"
-    set condition to input
+if not less age 18 do
+    show "You can drive :)"
 done
 
-show "done"
+if less age 18 do
+    show "You cannot drive :("
+done
