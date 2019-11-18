@@ -6,7 +6,7 @@ import java.nio.file.Paths;
 import values.Scope;
 import services.Lexer;
 
-class Main {
+class Pulp {
     public static void main (String args[]) {
         try (BufferedReader br = Files.newBufferedReader(Paths.get(args[0]))) {
             Scope scope = new Scope();
