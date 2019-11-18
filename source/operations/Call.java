@@ -9,7 +9,7 @@ import values.Value;
 public class Call extends Operation{
     private Value[] args;
 
-    public Call (Value[] args, BufferedReader br) {
+    public Call (Value[] args) {
         this.args = args;
     }
 

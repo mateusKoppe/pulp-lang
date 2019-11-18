@@ -57,11 +57,11 @@ public class Lexer {
                     if (params.length > 3 && params[2].getOriginal().equals("function")) {
                         return new Function(params, this.reader);
                     }
-                    return new Declare(params, this.reader);
+                    return new Declare(params);
                 case "set":
                     return new Set(params, this.reader);
                 case "call":
-                    return new Call(params, this.reader);
+                    return new Call(params);
                 case "return":
                     return new Return(params, this.reader);
                 case "if":

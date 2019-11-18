@@ -59,7 +59,7 @@ public class LexerExpression {
         return expressions.toArray(new Value[expressions.size()]);
     }
 
-    public static Value getMathExpression(String arg, Value[] MathParam){ //rever o retorno
+    public static Value getMathExpression(String arg, Value[] MathParam){
         try{
             switch (arg) {
                 case "sum":
@@ -82,9 +82,8 @@ public class LexerExpression {
             }
         }catch( Exception e ){
             System.out.println("Math expression construction failed");
-            //getMathExpression(args, i);
         }
-        return null; // O Java tava me pedindo um return aqui (?) fiquei confuso
+        return null;
     }
 
     public static Value getConditionExpression(String arg, Value[] params){
@@ -112,9 +111,8 @@ public class LexerExpression {
             }
         }catch( Exception e ){
             System.out.println("Condition expression construction failed");
-            //getMathExpression(args, i);
         }
-        return null; // O Java tava me pedindo um return aqui (?) fiquei confuso
+        return null;
     }
 
     private static Boolean isStringExpression (String arg) {

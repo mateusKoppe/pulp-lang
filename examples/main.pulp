@@ -2,7 +2,7 @@ declare name to "Koppe"
 declare newValue to sub 1 sum 2 sum 2 4
 
 show "PULP"
-show "Show sum, must be 6"
+show "Show sum, must be -7"
 show newValue
 show "Showing name, should be Koppe"
 show name
