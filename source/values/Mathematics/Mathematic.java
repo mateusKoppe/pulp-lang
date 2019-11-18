@@ -7,7 +7,7 @@ import values.Scope;
 import values.Value;
 
 abstract public class Mathematic extends Value {
-    public static List<String> reservedWords = Arrays.asList("sum","subtraction","sub","multiplication","mult","division","div","mod","pow","sqrt");
+    public static List<String> reservedWords = Arrays.asList("sum","subtraction","sub","multiplication","mult","division","div","mod","pow","root");
     
     abstract public String getOriginal();
     abstract public String executeMath(Scope scope) throws Exception;
